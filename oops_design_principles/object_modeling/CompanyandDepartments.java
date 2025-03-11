@@ -1,103 +1,95 @@
-package Week2Assigment4;
-import java.util.ArrayList;
-import java.util.List;
+package week2_Assignment3;
 
-class Company {
-    private String name;
-    private List<Department> departments;
+import java.util.*;
 
-    public Company(String name) {
-        this.name = name;
-        this.departments = new ArrayList<>();
-    }
-
-    
-    public void addDepartment(String departmentName) {
-        Department department = new Department(departmentName);
-        departments.add(department);  
-    }
-
-   
-    public List<Department> getDepartments() {
-        return departments;
-    }
-
-    
-    public void displayCompanyStructure() {
-        System.out.println("Company: " + this.name);
-        for (Department department : departments) {
-            department.displayDepartmentInfo();
-        }
-    }
-
-    
-    public void deleteCompany() {
-        departments.clear(); 
-        System.out.println("Company " + this.name + " and all associated departments and employees have been deleted.");
-    }
+class Employee {
+	String empName;
+	String empPosition;
+	
+	Employee(String empName, String empPosition){
+		this.empName = empName;
+		this.empPosition = empPosition;
+	}
+	
+	public void displayEmployee() {
+		System.out.println("Employee Name : "+empName+"\n"+"Employee Position : "+empPosition);
+	}
 }
 
 class Department {
-    private String name;
-    private List<Employee> employees;
-
-    public Department(String name) {
-        this.name = name;
-        this.employees = new ArrayList<>();
-    }
-
-    
-    public void addEmployee(String employeeName) {
-        Employee employee = new Employee(employeeName);
-        employees.add(employee);  
-    }
-
-    
-    public void displayDepartmentInfo() {
-        System.out.println("Department: " + this.name);
-        for (Employee employee : employees) {
-            employee.displayEmployeeInfo();
+	String deptName;
+	List<Employee> employees;
+	
+	Department(String deptName) {
+		this.deptName = deptName;
+		this.employees = new ArrayList<>();
+	}
+	
+	public void addEmployee(String empName, String empPosition) {
+		employees.add(new Employee(empName,empPosition));
+	}
+	
+	public void displayDepartment() {
+        System.out.println("Department: " + deptName);
+        for (Employee e : employees) {
+            e.displayEmployee();
         }
     }
-
-    
-    public void deleteDepartment() {
-        employees.clear();  
-        System.out.println("Department " + this.name + " and its employees have been deleted.");
-    }
 }
 
-class Employee {
-    private String name;
 
-    public Employee(String name) {
-        this.name = name;
-    }
 
-   
-    public void displayEmployeeInfo() {
-        System.out.println("Employee: " + this.name);
-    }
+class Company {
+	String companyName;
+	List<Department> departments;
+	
+	Company(String companyName) {
+		this.companyName = companyName;
+		this.departments = new ArrayList<>();
+	}
+	
+	public void addDepartment(Department department) {
+		departments.add(department);
+	}
+	
+	public void displayCompany() {
+		System.out.println("Company : "+companyName);
+		for(Department d : departments) {
+			d.displayDepartment();
+		}
+	}
 }
 
-public class CompanyandDepartments {
 
-    public static void main(String[] args) {
+
+public class CompanyAndDepartments {
+
+	public static void main(String[] args) {
+		
+		Company myCompany = new Company("Capgemini");
+		
+		
+		// Creating departments
+        Department itDept = new Department("IT");
+        Department hrDept = new Department("HR");
+
         
-        Company company = new Company("TechCorp");
+        // Adding employees to departments
+        itDept.addEmployee("Alice", "Software Engineer");
+        itDept.addEmployee("Bob", "DevOps Engineer");
 
-     
-        company.addDepartment("HR");
-        company.addDepartment("Engineering");
+        hrDept.addEmployee("Charlie", "HR Manager");
+        hrDept.addEmployee("David", "Recruiter");
 
         
-        company.getDepartments().get(0).addEmployee("Alice");
-        company.getDepartments().get(0).addEmployee("Bob");
-        company.getDepartments().get(1).addEmployee("Charlie");
-        company.getDepartments().get(1).addEmployee("David");
+        // Adding departments to the company
+        myCompany.addDepartment(itDept);
+        myCompany.addDepartment(hrDept);
 
-       
-        company.displayCompanyStructure();
-        company.deleteCompany();
-    }
+        
+        
+        // Display company structure
+        myCompany.displayCompany();
+	}
+
 }
